@@ -1,0 +1,115 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+a,
+img {
+    border: 0;
+}
+
+body {
+    background-color: #b5ce9f;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font: 1.5rem Roboto, sans-serif;
+    font-weight: 900;
+    padding-bottom: 1rem;
+}
+
+h1 span {
+    animation: load-text 1s infinite cubic-bezier(0.1, 0.15, 0.9, 1);
+    display: inline-block;
+}
+
+#jiazai {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 99;
+}
+
+#jiazai #load {
+    width: 300px;
+    height: 150px;
+    position: relative;
+    margin: 280px auto;
+}
+
+.progress-bar {
+    background-color: #eaeaea;
+    width: 300px;
+    height: 25px;
+    box-shadow: 1px 0px 2px rgba(0, 0, 0, 0.25), 0px 1px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: "";
+    background-color: white;
+    position: absolute;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    animation: load 1s linear;
+}
+
+
+/*** KEYFRAMES ***/
+
+@keyframes load {
+    0% {
+        width: 5%;
+        background-color: red;
+    }
+    25% {
+        background-color: orange;
+    }
+    50% {
+        background-color: yellow;
+    }
+    75% {
+        background-color: lightgreen;
+    }
+    90% {
+        background-color: green;
+        width: 100%;
+    }
+}
+
+@keyframes load-text {
+    0% {
+        transform: translateY(0px);
+    }
+    25% {
+        transform: translateY(5px);
+    }
+    50% {
+        transform: translateY(0px);
+    }
+    75% {
+        transform: translateY(-5px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}

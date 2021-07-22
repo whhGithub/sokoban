@@ -1,0 +1,113 @@
+/* CSS Document */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body,
+input {
+    font-size: 14px;
+    line-height: 24px;
+    /* color: #333; */
+    font-family: Microsoft yahei, Song, Arial, Helvetica, Tahoma, Geneva;
+}
+
+#contentluntan #post,
+#comment p {
+    zoom: 1;
+}
+
+#contentluntan #post:after,
+#comment p:after {
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+    overflow: hidden;
+}
+
+.transition {
+    -webkit-transition: all 0.5s linear;
+    -moz-transition: all 0.5s linear;
+    -o-transitions: all 0.5s linear;
+    -ms-transition: all 0.5s linear;
+    transition: all 0.5s linear;
+}
+
+#contentluntan {
+    width: 980px;
+    overflow: hidden;
+    margin: 0px auto;
+    display: none;
+    color: white;
+}
+
+#contentluntan #post {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px #d4d4d4 dashed;
+    height: 556px;
+}
+
+#contentluntan #post textarea {
+    display: block;
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 980px;
+    height: 390px;
+    border: 1px #d1d1d1 solid;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+}
+
+#contentluntan #post textarea:hover {
+    border: 1px #9bdf70 solid;
+    /* background: #f2fddb; */
+}
+
+#contentluntan #post #postBt,
+#contentluntan #post #clearBt {
+    margin-left: 5px;
+    padding: 3px;
+    float: right;
+}
+
+#comment {
+    overflow: hidden;
+}
+
+#comment p {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#comment p:nth-child(odd) {
+    border: 1px solid #e3e197;
+    background: #ffd;
+}
+
+#comment p:nth-child(even) {
+    border: 1px solid #adcd3c;
+    background: #f2fddb;
+}
+
+
+/*#comment p span{display:inline; float:left;}*/
+
+#comment p .right {
+    text-align: right;
+}
+
+#comment p .msg {
+    width: 738px;
+    color: black;
+}
+
+#comment p .datetime {
+    width: 200px;
+    color: #999;
+    text-align: right;
+}
