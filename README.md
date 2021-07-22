@@ -1,2 +1,2 @@
 # sokoban
-A Sokoban game developed by js
+A sokoban game developed by js
