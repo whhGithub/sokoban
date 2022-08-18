@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Sokoban</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+    <link
+      rel="stylesheet"
+      href="css/stylejiazai.css"
+      type="text/css"
+      media="all"
+    />
+    <link rel="stylesheet" href="css/tubiao.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/lyb.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="css/geren.css" type="text/css" media="all" />
+    <style>
+      * {
+        transition: all 0.5s;
+      }
+
+      body {
+        background: #000;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .popup {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+      }
+
+      #popup {
+        display: none;
+      }
+
+      .popup-content {
+        /* width: 600px;
+        height: 224px; */
+        width: 0;
+        height: 0;
+        box-sizing: border-box;
+        padding: 10px 30px;
+        color: black;
+        border-radius: 10px;
+      }
+
+      #popup-content {
+        background: url(beijin/beijing1.jpg) no-repeat;
+      }
+
+      #popup .top {
+        width: 100%;
+        position: relative;
+        margin-top: 65px;
+      }
+
+      #popup .top p {
+        font-weight: 700;
+        text-align: center;
+        font-size: 21px;
+        margin-left: -70px;
+        font-family: "楷体", "楷体_GB2312";
+      }
+
+      .anniu {
+        width: 100px;
+        height: 25px;
+        border: 1px solid #d0d0d0;
+        border-radius: 5px;
+        text-align: center;
+        float: right;
+        margin-left: 20px;
+        margin-top: 39px;
+        cursor: pointer;
+      }
+
+      #popup .tishi {
+        position: relative;
+        text-align: left;
+        left: 119px;
+        top: 8px;
+        font-size: 20px;
+        font-family: "楷体", "楷体_GB2312";
+      }
+
+      #replay {
+        background-color: #f6f6f6;
+        color: #959cac;
+      }
+
+      #next {
+        background-color: #428ceb;
+        color: #eefcfd;
+        border-color: #a3bbdd;
+      }
+
+      .guize {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+      }
+
+      .guize-content {
+        width: 600px;
+        height: 215px;
+        /* background-color: #fff; */
+        background: url(beijin/guize.jpg) no-repeat;
+        box-sizing: border-box;
+        padding: 10px 30px;
+        color: black;
+        border-radius: 10px;
+      }
+
+      .guize .top {
+        width: 100%;
+        position: relative;
+        margin-top: 65px;
+        left: 25px;
+      }
+
+      .guize .top p {
+        font-weight: 700;
+        text-align: left;
+        position: relative;
+        left: 100px;
+        top: -20px;
+        font-size: 23px;
+        font-family: "楷体", "楷体_GB2312";
+      }
+
+      .guize .tishi {
+        position: relative;
+        text-align: left;
+        left: 100px;
+        font-size: 19px;
+        top: -5px;
+        font-family: "楷体", "楷体_GB2312";
+      }
+
+      .guize #OK {
+        background-color: #f6f6f6;
+        color: #959cac;
+        position: relative;
+        top: -15px;
+      }
+
+      .victory {
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+      }
+
+      #victory {
+        display: none;
+      }
+
+      .victory-content {
+        width: 600px;
+        height: 197px;
+        box-sizing: border-box;
+        padding: 10px 30px;
+        color: black;
+        border-radius: 10px;
+        background: url(shenli.jpg) no-repeat;
+      }
+
+      #victory .tishi {
+        position: relative;
+        text-align: left;
+        left: 100px;
+        font-size: 21px;
+        top: -9px;
+        font-family: "楷体", "楷体_GB2312";
+      }
+
+      #victory .top {
+        width: 100%;
+        position: relative;
+        margin-top: 65px;
+        left: 40px;
+      }
+
+      #victory .top p {
+        font-weight: 700;
+        text-align: left;
+        position: relative;
+        left: 100px;
+        top: -20px;
+        font-size: 23px;
+        font-family: "楷体", "楷体_GB2312";
+      }
+
+      #victory .anniu {
+        width: 100px;
+        height: 25px;
+        border: 1px solid #d0d0d0;
+        border-radius: 5px;
+        text-align: center;
+        float: right;
+        margin-left: 20px;
+        margin-top: 10px;
+        cursor: pointer;
+      }
+
+      .gameBotton span {
+        display: inline-block;
+        width: 200px;
+        height: 50px;
+        background-color: #38c0ff;
+        color: rgba(255, 255, 255, 0.8);
+        counter-reset: #ffffff;
+        font-size: 16px;
+        text-align: center;
+        border-radius: 8px;
+        box-shadow: 18px 18px 30px rgba(0, 0, 0, 0.1),
+          -1px 1px 30px rgba(255, 255, 255, 1);
+        font-weight: bold;
+        line-height: 50px;
+        position: absolute;
+        cursor: pointer;
+        bottom: 40px;
+        font-size: 24px;
+      }
+
+      .gameBotton {
+        position: absolute;
+        top: 168px;
+        width: 1050px;
+      }
+
+      .gameBotton span:hover {
+        background-color: #428ceb;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .gameBotton span#gameRole {
+        position: relative;
+      }
+
+      .gameBotton span#previousLevel {
+        position: relative;
+        float: left;
+        margin-right: 215px;
+      }
+
+      .gameBotton span#reNext {
+        position: relative;
+        float: right;
+        margin-right: 0px;
+      }
+
+      #guizePanel {
+        display: none;
+        position: relative;
+        margin: 100px auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 加载框 -->
+    <div id="jiazai">
+      <div id="load">
+        <div class="wenzi">
+          <h1>
+            <span>L</span>
+            <span>O</span>
+            <span>A</span>
+            <span>D</span>
+            <span>I</span>
+            <span>N</span>
+            <span>G</span>
+            <span>.</span>
+            <span>.</span>
+            <span>.</span>
+          </h1>
+        </div>
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+    </div>
+    <!-- 主界面home图标 -->
+    <div class="container2" id="containerhome">
+      <div class="box">
+        <div class="img">
+          <img src="otherImage/blue/home1.png" />
+        </div>
+      </div>
+    </div>
+    <!-- 主界面个人图标 -->
+    <div class="container1" id="container">
+      <div class="box" id="personalButton">
+        <div class="img">
+          <img src="otherImage/blue/gerentxl.png" />
+        </div>
+        <p>个人中心</p>
+      </div>
+      <div class="box" id="guizeButton">
+        <div class="img">
+          <img src="otherImage/blue/tishubiglan.png" />
+        </div>
+        <p>游戏规则</p>
+      </div>
+      <div class="box">
+        <div class="img" id="musicBox">
+          <img src="otherImage/blue/labaguan.png" id="music" />
+          <audio src="music/beijin.mp3" loop="loop" id="audio"></audio>
+        </div>
+        <p>歌曲播放</p>
+      </div>
+      <div class="box" id="boke">
+        <div class="img">
+          <img src="otherImage/blue/boke.png" />
+        </div>
+        <p>交流博客</p>
+      </div>
+      <div class="box" id="characterButton">
+        <div class="img">
+          <img src="otherImage/blue/startbiglan.png" />
+        </div>
+        <p>开始游戏</p>
+      </div>
+      <div class="box">
+        <div class="img" id="EXIT">
+          <img src="otherImage/blue/EXIT.png" />
+        </div>
+        <p>退出登录</p>
+      </div>
+    </div>
+    <!-- 游戏界面弹窗 -->
+    <div id="flame"></div>
+    <div class="popup" id="popup">
+      <div class="popup-content" id="popup-content">
+        <div class="top">
+          <p id="popupText">箱子全部推进，本关获胜</p>
+          <div class="tishi">现在你可以选择下一关，也可以选择重玩</div>
+        </div>
+        <div class="btn1">
+          <div class="anniu" id="next">next</div>
+          <div class="anniu" id="replay">replay</div>
+        </div>
+      </div>
+    </div>
+    <div class="guize" id="guize">
+      <div class="guize-content">
+        <div class="top">
+          <p>游戏通关指南</p>
+          <div class="tishi">将箱子推到黄色终点即可通关</div>
+          <div class="tishi">当你碰到箱子的时候，你会发现它不止是一个箱子</div>
+        </div>
+        <div class="btn1">
+          <div class="anniu" id="OK">OK</div>
+        </div>
+      </div>
+    </div>
+    <div class="victory" id="victory">
+      <div class="victory-content">
+        <div class="top">
+          <p>游戏通关</p>
+          <div class="tishi">祝贺您的胜利。</div>
+          <div class="tishi">欢迎您再次突破。</div>
+        </div>
+        <div class="btn1">
+          <div class="anniu" id="OK">OK</div>
+          <div class="anniu" id="replay">replay</div>
+        </div>
+      </div>
+    </div>
+    <!-- 登录窗口 -->
+    <section class="forms" id="forms">
+      <div class="container">
+        <!-- //logo -->
+        <div class="forms-grid">
+          <!-- login -->
+          <div class="login">
+            <span class="fas fa-sign-in-alt"></span>
+            <strong>Welcome Sokoban!</strong>
+            <span>sign in to your account</span>
+            <!-- <form action="#" method="post" class="login-form"> -->
+            <fieldset>
+              <div class="form">
+                <div class="form-row" id="ID">
+                  <span class="fas fa-user"></span>
+                  <label class="form-label" for="input">ID</label>
+                  <input type="text" class="form-text" />
+                </div>
+                <div class="form-row" id="password">
+                  <span class="fas fa-eye"></span>
+                  <label class="form-label" for="input">Password</label>
+                  <input type="password" class="form-text" />
+                </div>
+                <div class="form-row bottom">
+                  <div class="form-check">
+                    <input
+                      type="checkbox"
+                      id="remenber"
+                      name="remenber"
+                      value="remenber"
+                    />
+                    <label for="remenber"> remember me?</label>
+                  </div>
+                  <a href="#url" class="forgot" id="forget">register?</a>
+                </div>
+                <div class="form-row button-login">
+                  <button class="btn btn-login" id="denglubutton">
+                    Login <span class="fas fa-arrow-right"></span>
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+            <!-- </form> -->
+          </div>
+          <!-- //login -->
+        </div>
+        <!-- copyright -->
+        <div class="copy-right">
+          <p>&copy; 2020 Minimal Forms. All rights reserved | Design by whh</p>
+        </div>
+        <!-- //copyright -->
+      </div>
+    </section>
+    <!-- 论坛返回主界面 -->
+    <div class="" id="home4">
+      <div class="box">
+        <div class="img">
+          <img src="otherImage/blue/home4.png" />
+        </div>
+      </div>
+    </div>
+    <!-- 论坛 -->
+    <div id="contentluntan">
+      <div id="post">
+        <div
+          style="
+            background: #2f80bf;
+            height: 30px;
+            color: white;
+            border-radius: 5px;
+          "
+        >
+          玩家姓名：<input
+            type="submit"
+            id="shangtian"
+            name="Submit3"
+            style="border: none; background-color: #2f80bf"
+            value="点击输入"
+            onclick="prom()"
+          />
+          <input
+            type="text"
+            id="ritian"
+            style="border: none; background-color: #2f80bf; color: white"
+            onclick="prom()"
+          />
+        </div>
+        <div>
+          <textarea class="transition"></textarea>
+        </div>
+        <input
+          id="postBt"
+          type="button"
+          style="
+            border: none;
+            background-color: #2f80bf;
+            color: white;
+            border-radius: 5px;
+            width: 80px;
+            height: 30px;
+          "
+          value="发表留言"
+        />
+        <input
+          id="clearBt"
+          type="button"
+          style="
+            border: none;
+            background-color: #2f80bf;
+            color: white;
+            border-radius: 5px;
+            width: 80px;
+            height: 30px;
+          "
+          value="清空"
+        />
+      </div>
+      <div id="comment"></div>
+    </div>
+    <!-- 论坛end -->
+    <!-- 人物选择 -->
+    <div class="container1" id="characterPanel">
+      <p class="wenzi">选择一个角色并开始游戏</p>
+      <div class="box">
+        <div class="img" id="renwu0">
+          <img src="otherImage/shenqibaobei/renwu/zhengmianf.png" />
+        </div>
+        <p>smith</p>
+      </div>
+      <div class="box">
+        <div class="img" id="renwu1">
+          <img src="otherImage/shenqibaobei/dami/damiz.png" />
+        </div>
+        <p>Rice</p>
+      </div>
+      <div class="box">
+        <div class="img" id="renwu2">
+          <img src="otherImage/shenqibaobei/gye/gyez.png" />
+        </div>
+        <p>yolk</p>
+      </div>
+      <div class="box">
+        <div class="img" id="renwu3">
+          <img src="otherImage/shenqibaobei/paocai/pcz.png" />
+        </div>
+        <p>pickle</p>
+      </div>
+      <div class="box">
+        <div class="img" id="renwu4">
+          <img src="otherImage/shenqibaobei/gz/gzz.png" />
+        </div>
+        <p>onion</p>
+      </div>
+      <div class="box">
+        <div class="img" id="renwu5">
+          <img src="otherImage/shenqibaobei/lanbaobao/lbbfm.png" />
+        </div>
+        <p>racer</p>
+      </div>
+    </div>
+    <!-- 游戏界面的按钮 -->
+    <div class="gameBotton" id="gameBotton">
+      <span id="previousLevel">上一关</span>
+      <span id="gameRole">游戏通关指南</span>
+      <span id="reNext">重玩/下一关</span>
+    </div>
+    <!-- 游戏界面的home按钮 -->
+    <div id="gameToHomePanel">
+      <div class="box">
+        <div class="img">
+          <img src="otherImage/blue/home4.png" />
+        </div>
+        <p>主界面</p>
+      </div>
+    </div>
+    <!-- 个人信息 -->
+    <div id="GerenPanel">
+      <header>
+        <div class="bio">
+          <img src="otherImage/geren/up.jpg" alt="background" class="bg" />
+          <div class="desc">
+            <h3>我的主页</h3>
+            <p></p>
+            <p>My game, you come to dominate</p>
+          </div>
+        </div>
+        <div class="avatarcontainer">
+          <img src="otherImage/geren/photo.jpg" alt="avatar" class="avatar" />
+          <div class="hover">
+            <div class="icon-twitter"></div>
+          </div>
+        </div>
+      </header>
+      <div class="content">
+        <div class="data">
+          <ul>
+            <li>
+              513
+              <span>帖子</span>
+            </li>
+            <li>
+              2,004
+              <span>粉丝</span>
+            </li>
+            <li>
+              71
+              <span>关注</span>
+            </li>
+          </ul>
+        </div>
+        <div id="tiezi" class="follow">发布帖子</div>
+      </div>
+    </div>
+    <!-- 游戏规则内容 -->
+    <div id="guizePanel">
+      <img src="otherImage/guize.jpg" />
+    </div>
+    <!-- 小地图 -->
+    <script>
+      // Game rule Next/replay
+      function Obj() {} //创建一个对象
+
+      /*为这个对象添加一个具有一个参数的原型方法*/
+      Obj.prototype.draw = function (o) {
+        var speed = 0; //雪花每次下落的数值（10px）
+        var startPosLeft = Math.ceil(
+          Math.random() * document.documentElement.clientWidth
+        ); //设置雪花随机的开始x值的大小
+        o.style.opacity = (Math.ceil(Math.random() * 3) + 7) / 10; //设置透明度
+        o.style.left = startPosLeft + "px";
+        o.style.color = "#fff ";
+        o.style.fontSize = 12 + Math.ceil(Math.random() * 14) + "px";
+        setInterval(function () {
+          //雪花下落的top值小鱼屏幕的可视区域高时执行下列
+          if (speed < document.documentElement.clientHeight) {
+            o.style.top = speed + "px";
+            o.style.left = startPosLeft + Math.ceil(Math.random() * 8);
+            ("px");
+            speed += 10;
+          } else {
+            o.style.display = "none";
+          }
+        }, 100);
+      };
+
+      var flame = document.getElementById("flame");
+
+      /*使用setInterval定时器每800毫秒创建一个雪花*/
+      setInterval(function () {
+        var odiv = document.createElement("div"); //创建div
+        odiv.innerHTML = "✽ "; //div的内容
+        odiv.style.position = "absolute"; //div的绝对定位
+        flame.appendChild(odiv); //把创建好的div放进flame中
+        var obj = new Obj(); //创建函数
+        obj.draw(odiv); //执行obj的draw方法
+      }, 100);
+      //主界面
+      var home = createUnit({
+        parent: document.body,
+        w: 900,
+        h: 500,
+        position: "relative",
+      });
+      home.style.margin = "55px auto";
+      home.style.background = "url(otherImage/homeblue1.png) no-repeat";
+      home.style.borderRadius = "20px";
+      home.style.display = "none";
+      //左上角的标语
+      var homeSlogan = createUnit({
+        parent: home,
+        w: 440,
+        h: 50,
+        position: "relative",
+      });
+      homeSlogan.style.left = "30px";
+      homeSlogan.style.top = "25px";
+      homeSlogan.style.fontSize = "30px";
+      homeSlogan.style.color = "white";
+      (homeSlogan.style.fontFamily = "楷体"), "楷体_GB2312";
+      homeSlogan.style.letterSpacing = "5px";
+      homeSlogan.innerHTML = "欢迎来到主界面";
+      //主界面图标
+      var containerTubiao = document.getElementById("container");
+      home.appendChild(containerTubiao);
+      //主界面上面的home图标
+      var containerHome = document.getElementById("containerhome");
+      home.appendChild(containerHome);
+      containerhome.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          GerenPanel.style.display = "none";
+          characterPanel.style.display = "none";
+          guizePanel.style.display = "none";
+          homeSlogan.style.position = "relative";
+          container.style.display = "flex";
+          homeSlogan.innerHTML = "欢迎来到主界面";
+        }, 1000);
+      };
+      var exit = document.getElementById("EXIT");
+      exit.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          home.style.display = "none";
+          dengluWindow.style.display = "flex";
+        }, 1000);
+      };
+
+      //论坛
+      var contentluntan = document.getElementById("contentluntan");
+      // console.log(contentluntan);
+      // contentluntan.currentStyle["display"]
+      // getComputedStyle(contentluntan,null)["display"];
+      contentluntan.style.display = "none";
+      var boke = document.getElementById("boke");
+      boke.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          home.style.display = "none";
+          homeluntan.style.display = "flex";
+          contentluntan.style.display = "block";
+          document.body.style.overflow = "scroll";
+          contentluntan.style.zoom = 0.75;
+        }, 1000);
+      };
+
+      //论坛回到主界面
+      var homeluntan = document.getElementById("home4");
+      homeluntan.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          contentluntan.style.display = "none";
+          home.style.display = "flex";
+          homeluntan.style.display = "none";
+          document.body.style.overflow = "hidden";
+          contentluntan.style.zoom = 1;
+        }, 1000);
+      };
+      document.onkeydown = enter;
+      //登录窗口
+      var dengluWindow = document.getElementById("forms");
+      // dengluWindow.style.display = "none"
+      var denglubutton = document.getElementById("denglubutton");
+      var jiazai = document.getElementById("jiazai");
+      var progressBar = document.getElementById("progress-bar");
+      var id = document.getElementsByTagName("input")[0];
+      var pwd = document.getElementsByTagName("input")[1];
+      denglubutton.onclick = function () {
+        var idValue = id.value;
+        var pwdValue = pwd.value;
+        if (idValue == "user" && pwdValue == "123456") {
+          jiazai.style.display = "block";
+          setTimeout(function () {
+            jiazai.style.display = "none";
+            dengluWindow.style.display = "none";
+            home.style.display = "flex";
+          }, 1000);
+        } else {
+          alert("登录失败,请重新登录！！");
+        }
+      };
+
+      //忘记密码
+      var forget = document.getElementById("forget");
+      forget.onclick = function () {
+        id.value = "user";
+        pwd.value = "123456";
+      };
+
+      //播放 mp3这个音频对象
+      //暂停
+      // mp3.load();
+      //音乐播放器
+      var mp3 = document.getElementById("audio");
+      // var mp3 = new Audio(mp3);
+      var musicBox = document.getElementById("musicBox");
+      var music = document.getElementById("music");
+      var musicMark = false;
+      musicBox.onclick = function () {
+        if (musicMark == true) {
+          music.src = "otherImage/blue/labaguan.png";
+          mp3.pause();
+          musicMark = false;
+          console.log(musicMark);
+        } else {
+          music.src = "otherImage/blue/labakai.png";
+          mp3.play();
+          musicMark = true;
+          console.log(musicMark);
+        }
+      };
+      var characterPanel = document.getElementById("characterPanel");
+      characterPanel.style.display = "none";
+      var characterButton = document.getElementById("characterButton");
+      home.appendChild(characterPanel);
+      characterButton.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          characterPanel.style.display = "flex";
+          container.style.display = "none";
+          homeSlogan.innerHTML = "人物选择";
+        }, 1000);
+        return;
+      };
+
+      //个人
+      var GerenPanel = document.getElementById("GerenPanel");
+      home.appendChild(GerenPanel);
+      var personalButton = document.getElementById("personalButton");
+      personalButton.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          GerenPanel.style.display = "block";
+          container.style.display = "none";
+          homeSlogan.innerHTML = "个人中心";
+        }, 1000);
+        return;
+      };
+      var tiezi = document.getElementById("tiezi");
+      tiezi.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          home.style.display = "none";
+          homeluntan.style.display = "flex";
+          contentluntan.style.display = "block";
+          document.body.style.overflow = "scroll";
+          contentluntan.style.zoom = 0.75;
+        }, 1000);
+      };
+
+      //游戏规则面板
+      var guizePanel = document.getElementById("guizePanel");
+      home.appendChild(guizePanel);
+      var guizeButton = document.getElementById("guizeButton");
+      guizeButton.onclick = function () {
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          guizePanel.style.display = "block";
+          container.style.display = "none";
+          homeSlogan.style.position = "absolute";
+          homeSlogan.innerHTML = "游戏指南";
+        }, 1000);
+      };
+
+      //游戏大box
+      var gameBox = createUnit({
+        parent: document.body,
+        w: 1050,
+        h: 1200,
+        position: "relative",
+      });
+      gameBox.style.margin = "25px auto";
+      gameBox.style.zoom = 0.5;
+      // gameBox.style.border = "1px solid red";
+      // gameBox.style.background = "red ";
+      gameBox.style.display = "none";
+      //游戏返回主界面
+      var gameToHomePanel = document.getElementById("gameToHomePanel");
+      gameBox.appendChild(gameToHomePanel);
+      gameToHomePanel.style.cursor = "pointer";
+      gameToHomePanel.onclick = function () {
+        document.onkeydown = enter;
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          gameBox.style.display = "none";
+          home.style.display = "flex";
+        }, 1000);
+      };
+
+      //游戏界面的游戏规则
+      var gameRole = document.getElementById("gameRole");
+      gameRole.onclick = function () {
+        showGuize();
+      };
+
+      //ok按钮
+      var ok = document.getElementById("OK");
+      ok.onclick = function () {
+        document.getElementById("guize").style.display = "none";
+      };
+
+      onmouse(ok, "#208ef4", "#eefcfd", "#f6f6f6", "#959cac");
+      var gameBotton = document.getElementById("gameBotton");
+      gameBox.appendChild(gameBotton);
+      // //重玩和下一关
+      var reNext = document.getElementById("reNext");
+      var popupText = document.getElementById("popupText");
+      reNext.onclick = function () {
+        showPopup();
+        popupText.innerHTML = "你这么就赢啦？？？？";
+        popupText.style.marginLeft = "-90px";
+      };
+
+      // onmouse(reNext, "#208ef4", " ", "#00bbf0", "#eefcfd");
+      //上一关
+      var previousLevel = document.getElementById("previousLevel");
+      previousLevel.onclick = function () {
+        if (level > 0) {
+          level--;
+          changMap(level);
+        }
+      };
+
+      //上一关的触碰和离开事件
+      // onmouse(previousLevel, "#208ef4", " ", "#00bbf0", "#eefcfd");
+      //游戏胜利
+      var victoryReplay =
+        document.getElementById("victory").lastElementChild.lastElementChild
+          .lastElementChild;
+      victoryReplay.onclick = function () {
+        document.getElementById("victory").style.display = "none";
+        level = 0;
+        changMap(level);
+      };
+
+      //victoryOk按钮
+      var victoryOk =
+        document.getElementById("victory").lastElementChild.lastElementChild
+          .firstElementChild;
+      console.log(victoryOk);
+      victoryOk.onclick = function () {
+        document.getElementById("victory").style.display = "none";
+      };
+      onmouse(victoryOk, "#208ef4", "#eefcfd", "#f6f6f6", "#959cac");
+
+      //下一关按钮
+      var next = document.getElementById("next");
+      next.onclick = function () {
+        hidePopup("next");
+      };
+
+      //重玩按钮
+      var replay = document.getElementById("replay");
+      replay.onclick = function () {
+        hidePopup("replay");
+      };
+
+      // otherImage/shenqibaobei/dami/damiz.png
+      // otherImage/shenqibaobei/gye/gyez.png
+      // otherImage/shenqibaobei/paocai/pcz.png
+      // otherImage/shenqibaobei/gz/gzz.png
+      // otherImage/shenqibaobei/lanbaobao/lbbfm.png
+      //选择人物
+      var e1 = 0;
+      var Choose = 0;
+      var renwu = [
+        {
+          name: "smith",
+          zheng: "url(otherImage/shenqibaobei/renwu/zhengmian.png)",
+          houmian: "url(otherImage/shenqibaobei/renwu/houmian.png)",
+          zuomian: "url(otherImage/shenqibaobei/renwu/zuomian.png)",
+          youmian: "url(otherImage/shenqibaobei/renwu/youmian.png)",
+        },
+        {
+          name: "Rice",
+          zheng: "url(otherImage/shenqibaobei/dami/damiz.png)",
+          houmian: "url(otherImage/shenqibaobei/dami/damih.png)",
+          zuomian: "url(otherImage/shenqibaobei/dami/damir.png)",
+          youmian: "url(otherImage/shenqibaobei/dami/damil.png)",
+        },
+        {
+          name: "yolk",
+          zheng: "url(otherImage/shenqibaobei/gye/gyez.png)",
+          houmian: "url(otherImage/shenqibaobei/gye/gyeh.png)",
+          zuomian: "url(otherImage/shenqibaobei/gye/gyer.png)",
+          youmian: "url(otherImage/shenqibaobei/gye/gyel.png)",
+        },
+        {
+          name: "pickle",
+          zheng: "url(otherImage/shenqibaobei/paocai/pcz.png)",
+          houmian: "url(otherImage/shenqibaobei/paocai/pch.png)",
+          zuomian: "url(otherImage/shenqibaobei/paocai/pcr.png)",
+          youmian: "url(otherImage/shenqibaobei/paocai/pcl.png)",
+        },
+        {
+          name: "onion",
+          zheng: "url(otherImage/shenqibaobei/gz/gzz.png)",
+          houmian: "url(otherImage/shenqibaobei/gz/gzh.png)",
+          zuomian: "url(otherImage/shenqibaobei/gz/gzr.png)",
+          youmian: "url(otherImage/shenqibaobei/gz/gzl.png)",
+        },
+        {
+          name: "racer",
+          zheng: "url(otherImage/shenqibaobei/lanbaobao/lbbz.png)",
+          houmian: "url(otherImage/shenqibaobei/lanbaobao/lbbh.png)",
+          zuomian: "url(otherImage/shenqibaobei/lanbaobao/lbbr.png)",
+          youmian: "url(otherImage/shenqibaobei/lanbaobao/lbbl.png)",
+        },
+      ];
+      var chooseRenwu;
+      var chooseFlag = 0;
+
+      var renwu0 = document.getElementById("renwu0");
+      renwu0.onclick = function () {
+        chose(0);
+      };
+      var renwu1 = document.getElementById("renwu1");
+      renwu1.onclick = function () {
+        chose(1);
+      };
+      var renwu2 = document.getElementById("renwu2");
+      renwu2.onclick = function () {
+        chose(2);
+      };
+      var renwu3 = document.getElementById("renwu3");
+      renwu3.onclick = function () {
+        chose(3);
+      };
+      var renwu4 = document.getElementById("renwu4");
+      renwu4.onclick = function () {
+        chose(4);
+      };
+      var renwu5 = document.getElementById("renwu5");
+      renwu5.onclick = function () {
+        chose(5);
+      };
+
+      // renwuOnclick(5);
+
+      // function renwuOnclick(renwuLength) {
+      //     for (var i = 0; i < renwuLength; i++) {
+      //         var renwu = document.getElementById('renwu' + i);
+      //         renwu.onclick = function() {
+      //             chose(5);
+      //         }
+      //     }
+      // }
+      var choseflag = false;
+
+      function chose(m) {
+        Choose = m;
+        chooseRenwu = renwu[Choose];
+        e1 = e1.keyCode;
+        if (e1 == 37) {
+          role.style.backgroundImage = chooseRenwu.youmian;
+        }
+        if (e1 == 38) {
+          role.style.backgroundImage = chooseRenwu.houmian;
+        }
+        if (e1 == 39) {
+          role.style.backgroundImage = chooseRenwu.zuomian;
+        }
+        if (e1 == 40) {
+          role.style.backgroundImage = chooseRenwu.zheng;
+        }
+        jiazai.style.display = "block";
+        setTimeout(function () {
+          jiazai.style.display = "none";
+          home.style.display = "none";
+          gameBox.style.display = "flex";
+          gameBox.style.zoom = 0.5;
+          if (chooseFlag == 0) {
+            var gridable1 = gridable(19, 21, arr, chooseRenwu);
+            chooseFlag++;
+          }
+          document.onkeydown = move;
+        }, 1000);
+        return;
+      }
+      //人物选择进入功能
+
+      //创建大地图
+      var obox = createUnit({
+        parent: gameBox,
+        w: 1050,
+        h: 950,
+        position: "absolute",
+      });
+      obox.style.backgroundImage = "url(map/daditu0.jpg)";
+      obox.style.backgroundSize = "100% 100%";
+      // obox.style.left = "375px";
+      // obox.style.top = "200px";
+      // obox.style.display = "none ";
+      obox.style.margin = "200px auto";
+      obox.style.display = "block";
+      obox.style.borderRadius = "5px";
+      obox.style.zIndex = 1;
+      var level = 0;
+      var arr = init()[level];
+      var role;
+
+      //创建大地图上层遮盖
+      var obox1 = createUnit({
+        parent: gameBox,
+        w: 1050,
+        h: 950,
+        position: "absolute",
+      });
+      obox1.style.backgroundImage = "url(map/daditukong0.png)";
+      obox1.style.backgroundSize = "100% 100%";
+      // obox1.style.left = "375px";
+      // obox1.style.top = "200px";
+      // obox.style.display = "none ";
+      obox1.style.margin = "200px auto";
+      obox1.style.display = "block";
+      obox1.style.borderRadius = "5px";
+      obox1.style.zIndex = 2;
+
+      function init() {
+        var Arr = [
+          [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1, 1, 0, 3, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1],
+            [1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 1, 4, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 4, 1, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          ],
+          [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1],
+            [1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 1, 0, 0, 3, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0, 1],
+            [1, 4, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 4, 0, 0, 0, 0, 1, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1],
+            [1, 4, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 1, 1, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 1, 1, 0, 2, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          ],
+          [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1, 1, 0, 3, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1],
+            [1, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 3, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 1, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 1, 4, 0, 0, 0, 3, 1, 1, 1, 1, 1, 3, 0, 4, 1, 0, 0, 1],
+            [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 3, 2, 3, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          ],
+          [
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 3, 0, 3, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 1],
+            [1, 0, 1, 4, 0, 0, 1, 0, 0, 0, 0, 0, 1, 3, 2, 3, 0, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 3, 0, 1, 0, 0, 0, 1],
+            [1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 0, 0, 0, 0, 1],
+            [1, 1, 4, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1],
+            [1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 1, 4, 0, 0, 1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1],
+            [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1],
+            [1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1],
+            [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+          ],
+        ];
+        return Arr;
+      }
+      var count = 0;
+
+      function getCss(obj, attr) {
+        return obj.currentStyle
+          ? obj.currentStyle[attr]
+          : getComputedStyle(obj, null)[attr];
+      }
+
+      function gridable(rowCount, colCount, arr, chooseRenwu) {
+        for (var row = 0; row < rowCount; row++) {
+          for (var col = 0; col < colCount; col++) {
+            width = obox.clientWidth / colCount;
+            height = obox.clientHeight / rowCount;
+            if (arr[row][col] == 2) {
+              role = createUnit({
+                parent: obox,
+                w: width,
+                h: height,
+                position: "absolute",
+                l: width * col,
+                t: height * row,
+              });
+              role.style.backgroundSize = "100% 100%";
+              role.style.backgroundImage = chooseRenwu.houmian;
+              console.log(chooseRenwu.zheng);
+              role.rRow = row;
+              role.rCol = col;
+              // role.id = "box " + role.rRow + role.rCol;
+            }
+            if (arr[row][col] == 3) {
+              var oCase = createUnit({
+                parent: obox,
+                w: width,
+                h: height,
+                position: "absolute",
+                l: width * col,
+                t: height * row,
+              });
+              oCase.style.backgroundSize = "100% 100%";
+              oCase.style.backgroundImage = "url(xiangzi/xiangzi.png)";
+              oCase.oRow = row;
+              oCase.oCol = col;
+              oCase.id = "box" + oCase.oRow + oCase.oCol;
+            }
+            if (arr[row][col] == 4) {
+              var zhongdian = createUnit({
+                parent: obox,
+                w: width,
+                h: height,
+                position: "absolute",
+                l: width * col,
+                t: height * row,
+              });
+              zhongdian.style.backgroundImage = "url(zhongdian/zhongdian.png)";
+              zhongdian.style.backgroundSize = "100% 100%";
+            }
+          }
+        }
+      }
+
+      function enter(e) {
+        var key = e.keyCode;
+        if (key == 13) {
+          if (dengluWindow.style.display != "none") {
+            var idValue = id.value;
+            var pwdValue = pwd.value;
+            if (idValue == "123" && pwdValue == "123456") {
+              jiazai.style.display = "block";
+              setTimeout(function () {
+                jiazai.style.display = "none";
+                dengluWindow.style.display = "none";
+                home.style.display = "flex";
+              }, 1000);
+            } else {
+              alert("登录失败,请重新登录！！");
+            }
+            return;
+          }
+          // if (home.style.display != "none") {
+          //     jiazai.style.display = "block";
+          //     setTimeout(function() {
+          //         jiazai.style.display = "none";
+          //         home.style.display = "none";
+          //         gameBox.style.display = "flex";
+          //         gameBox.style.zoom = 0.5;
+          //         obox.innerHTML = "";
+          //         var gridable1 = gridable(19, 21, arr, chooseRenwu);
+          //     }, 1000);
+          //     return;
+          // }
+          if (getCss(contentluntan, "display") != "none") {
+            jiazai.style.display = "block";
+            setTimeout(function () {
+              jiazai.style.display = "none";
+              contentluntan.style.display = "none";
+              home.style.display = "flex";
+              document.body.style.overflow = "hidden";
+              contentluntan.style.zoom = 1;
+              homeluntan.style.display = "none";
+            }, 1000);
+            return;
+          }
+        }
+      }
+
+      function move(e) {
+        var key = e.keyCode;
+        e1 = e;
+        if (getCss(gameBox, "display") != "none") {
+          if (key == 37) {
+            run(chooseRenwu.youmian, 0, -1, 0, -2, 37);
+          }
+          if (key == 38) {
+            run(chooseRenwu.houmian, -1, 0, -2, 0, 38);
+          }
+          if (key == 39) {
+            run(chooseRenwu.zuomian, 0, 1, 0, 2, 39);
+          }
+          if (key == 40) {
+            run(chooseRenwu.zheng, 1, 0, 2, 0, 40);
+          }
+        }
+      }
+
+      function run(backgroundImage, a, b, c1, d, key) {
+        role.style.backgroundImage = backgroundImage;
+        if (arr[role.rRow + a][role.rCol + b] == 0) {
+          // if (key == 37) {
+          //     if (role.rRow + a > xl && role.rRow + a <= xr) {
+          //         obox.style.left = parseInt(obox.style.left) + 50 + "px ";
+          //     }
+          // }
+          // if (key == 38) {
+          //     if (role.rCol + b > yl && role.rCol + b < yr) {
+          //         obox.style.top = parseInt(obox.style.top) + 50 + "px ";
+          //     }
+          // }
+          // if (key == 39) {
+          //     if (role.rRow + a >= xl && role.rRow + a < xr) {
+          //         obox.style.left = parseInt(obox.style.left) - 50 + "px ";
+          //     }
+          // }
+          // if (key == 40) {
+          //     if (role.rCol + b >= yl && role.rCol + b <= yr) {
+          //         obox.style.top = parseInt(obox.style.top) - 50 + "px ";
+          //     }
+          // }
+          arr[role.rRow][role.rCol] = 0; //按约定，杯子到哪里2到哪里，走之前，需要把原来占据的2还原为0
+          role.rCol = role.rCol + b;
+          role.rRow = role.rRow + a;
+          role.style.left = role.rCol * width + "px";
+          role.style.top = role.rRow * height + "px";
+          arr[role.rRow][role.rCol] = 2; //按约定，杯子带着2走
+        } else if (arr[role.rRow + a][role.rCol + b] == 3) {
+          //表面人的左边是箱子
+          if (
+            arr[role.rRow + c1][role.rCol + d] == 0 ||
+            arr[role.rRow + c1][role.rCol + d] == 4
+          ) {
+            var curCase = document.querySelector(
+              "#box" + (role.rRow + a) + (role.rCol + b)
+            );
+            arr[curCase.oRow][curCase.oCol] = 0;
+            curCase.oCol = curCase.oCol + b;
+            curCase.oRow = curCase.oRow + a;
+            curCase.style.left = curCase.oCol * width + "px";
+            curCase.style.top = curCase.oRow * height + "px";
+            arr[curCase.oRow][curCase.oCol] = 3;
+            curCase.id = "box" + curCase.oRow + curCase.oCol;
+            curCase.style.zIndex = 2;
+            //人开始走
+            arr[role.rRow][role.rCol] = 0; //按约定，杯子到哪里2到哪里，走之前，需要把原来占据的2还原为0
+            role.rCol = role.rCol + b;
+            role.rRow = role.rRow + a;
+            role.style.left = role.rCol * width + "px";
+            role.style.top = role.rRow * height + "px";
+            arr[role.rRow][role.rCol] = 2; //按约定，杯子带着2走
+            curCase.style.backgroundImage = "url(xiangzi/xiangzi1.png)";
+            if (isFinshied() == true && level < init().length - 1) {
+              popupText.innerHTML = "箱子全部推进，本关获胜";
+              popupText.style.marginLeft = "-70px";
+              showPopup();
+            } else if (isFinshied() == true && level == init().length - 1) {
+              showVictory();
+              document.onkeydown = null;
+            }
+          }
+        }
+      }
+      //MenuButton菜单按钮事件
+      function MenuButton(
+        obj,
+        border,
+        left,
+        top,
+        display,
+        borderRadius,
+        innerHTML,
+        fontSize,
+        textAlign,
+        cursor,
+        color,
+        backgroundColor
+      ) {
+        obj.style.border = border;
+        obj.style.left = left;
+        obj.style.top = top;
+        obj.style.display = display;
+        obj.style.borderRadius = borderRadius;
+        obj.innerHTML = innerHTML;
+        obj.style.fontSize = fontSize;
+        obj.style.textAlign = textAlign;
+        obj.style.cursor = cursor;
+        obj.style.color = color;
+        obj.style.backgroundColor = backgroundColor;
+      }
+      //触碰和离开事件(图片改变)
+      function onmouseImage(obj, onmouseoverbackground, onmouseoutbackground) {
+        obj.onmouseover = function () {
+          obj.style.background = onmouseoverbackground;
+        };
+        obj.onmouseout = function () {
+          obj.style.background = onmouseoutbackground;
+        };
+      }
+      //触碰和离开事件
+      function onmouse(
+        obj,
+        onmouseoverColorb,
+        onmouseoverColor,
+        onmouseoutColorb,
+        onmouseoutColor
+      ) {
+        obj.onmouseover = function () {
+          obj.style.backgroundColor = onmouseoverColorb;
+          obj.style.color = onmouseoverColor;
+        };
+        obj.onmouseout = function () {
+          obj.style.backgroundColor = onmouseoutColorb;
+          obj.style.color = onmouseoutColor;
+        };
+      }
+      //游戏规则提示
+      function showGuize() {
+        document.getElementById("guize").style.display = "flex";
+      }
+      //游戏胜利
+      function showVictory() {
+        document.getElementById("victory").style.display = "flex";
+      }
+      //显示弹窗函数，设置display为flex
+      function showPopup() {
+        document.getElementById("popup").style.display = "flex";
+        document.getElementById("popup-content").style.width = "600px";
+        document.getElementById("popup-content").style.height = "215px";
+      }
+
+      function hidePopup(x) {
+        console.log(arr);
+        if (x == "next" && level + 1 < init().length) {
+          level++;
+          changMap(level);
+        }
+        if (x == "replay") {
+          changMap(level);
+        }
+        document.getElementById("popup").style.display = "none";
+      }
+
+      function changMap(level1) {
+        arr = init()[level];
+        obox.style.backgroundImage = "url(map/daditu" + level1 + ".jpg)";
+        obox.innerHTML = "";
+        gridable1 = gridable(19, 21, arr, chooseRenwu);
+        document.onkeydown = move;
+      }
+
+      function createUnit(objCss) {
+        var oBox = document.createElement("div");
+        objCss.parent.appendChild(oBox);
+        oBox.style.width = objCss.w + "px";
+        oBox.style.height = objCss.h + "px";
+        oBox.style.position = objCss.position;
+        oBox.style.left = objCss.l + "px";
+        oBox.style.top = objCss.t + "px";
+        return oBox;
+      }
+
+      function isFinshied() {
+        var flag = true;
+        for (var i = 0; i < arr.length; i++) {
+          for (var j = 0; j < arr[0].length; j++) {
+            if (arr[i][j] == 4) {
+              flag = false;
+            }
+          }
+        }
+        return flag;
+      }
+      //论坛
+      var named;
+
+      function delete1(id) {
+        localStorage.removeItem(id);
+        this.Storage.writeData();
+      }
+
+      function prom() {
+        var name = prompt("请输入您的名字", ""); //将输入的内容赋给变量 name ，
+        named = name;
+        //这里需要注意的是，prompt有两个参数，前面是提示的话，后面是当对话框出来后，在对话框里的默认值
+        if (named) {
+          //如果返回的有内容
+          alert("欢迎您：" + name);
+          document.getElementById("shangtian").style.display = "none";
+          document.getElementById("ritian").value = named;
+        } else {
+          document.getElementById("ritian").value = "匿名发言者";
+        }
+      }
+      var Storage = {
+        saveData: function () //保存数据
+        {
+          var data = document.querySelector("#post textarea");
+          if (data.value != "") {
+            var time = new Date().getTime() + Math.random() * 5; //getTime是Date对象中的方法，作用是返回 1970年01月01日至今的毫秒数
+            if (named) {
+              localStorage.setItem(
+                time,
+                data.value + "|" + named + "|" + this.getDateTime()
+              ); //将毫秒数存入Key值中，可以降低Key值重复率
+            } else {
+              localStorage.setItem(
+                time,
+                data.value + "|" + "匿名发言者" + "|" + this.getDateTime()
+              ); //将毫秒数存入Key值中，可以降低Key值重复率
+            }
+            data.value = "";
+            this.writeData();
+          } else {
+            alert("请填写您的留言！");
+          }
+        },
+        writeData: function () {
+          //输出数据
+          var dataHtml = "",
+            data = "";
+          for (var i = localStorage.length - 1; i >= 0; i--) {
+            //效率更高的循环方法
+            data = localStorage.getItem(localStorage.key(i)).split("|");
+            //dataHtml += "<p><span class=\"msg\">" + data[0] + "</span><span class=\"datetime\">" + data[1] + "</span><span>" + data[2]+"</span></p>";
+            dataHtml +=
+              "<span style=>" +
+              data[1] +
+              '<span style="float:right">' +
+              data[2] +
+              '</span><p><span class="msg">' +
+              data[0] +
+              '<input style="float:right;border:none;border-radius:5px;" id="clearBt" type="button" onclick="delete1(' +
+              localStorage.key(i) +
+              ');" value="删除"/>' +
+              "</span></p>";
+          }
+          document.getElementById("comment").innerHTML = dataHtml;
+        },
+        clearData: function () {
+          //清空数据
+          if (localStorage.length > 0) {
+            if (window.confirm("清空后不可恢复，是否确认清空？")) {
+              localStorage.clear();
+              this.writeData();
+            }
+          } else {
+            alert("没有需要清空的数据！");
+          }
+        },
+        getDateTime: function () {
+          //获取日期时间，例如 2012-03-08 12:58:58
+          var isZero = function (num) {
+            //私有方法，自动补零
+            if (num < 10) {
+              num = "0" + num;
+            }
+            return num;
+          };
+          var d = new Date();
+          return (
+            d.getFullYear() +
+            "-" +
+            isZero(d.getMonth() + 1) +
+            "-" +
+            isZero(d.getDate()) +
+            " " +
+            isZero(d.getHours()) +
+            ":" +
+            isZero(d.getMinutes()) +
+            ":" +
+            isZero(d.getSeconds())
+          );
+        },
+      };
+
+      window.onload = function () {
+        Storage.writeData(); //当打开页面的时候，先将localStorage中的数据输出一边，如果没有数据，则输出空
+        document.getElementById("postBt").onclick = function () {
+          Storage.saveData();
+        }; //发表评论按钮添加点击事件，作用是将localStorage中的数据输出
+        document.getElementById("clearBt").onclick = function () {
+          Storage.clearData();
+        }; //清空所有已保存的数据
+      };
+    </script>
+  </body>
+</html>
